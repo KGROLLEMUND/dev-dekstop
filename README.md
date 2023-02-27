@@ -5,7 +5,7 @@ Kyllian GROLLEMUND
 
 je pense faire un spotify 
 
-### fonctionnalités
+### Fonctionnalités
 
 Récupère une api et affiche :
 - les albums
