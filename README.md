@@ -5,10 +5,10 @@ j'hesite a mettre mon nom ici, mais bon, c'est un readme, donc c'est pas grave s
 je pense faire un spotify :
 
 ## fonctionnalités
-- récupère une api et affiche 
--les albums
--les titres d'un album
--les infos d'un album
--les infos d'un artiste
--les titres d'un artiste
+- récupère une api et affiche  : 
+    -les albums
+    -les titres d'un album
+    -les infos d'un album
+    -les infos d'un artiste
+    -les titres d'un artiste
 
