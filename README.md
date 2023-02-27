@@ -21,4 +21,5 @@ Partie 2
 - possibilité de créer une playlist
 - possibilité de supprimer une playlist
 - catégorie favori
+- Notif musique en cours
 
