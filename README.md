@@ -10,7 +10,5 @@ je pense faire un spotify :
 -les titres d'un album
 -les infos d'un album
 -les infos d'un artiste
--les albums d'un artiste
 -les titres d'un artiste
--les infos d'un titre
--les infos d'un album
+
