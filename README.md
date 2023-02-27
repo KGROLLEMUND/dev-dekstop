@@ -2,10 +2,10 @@
 Kyllian GROLLEMUND
 
 ## Description
-je pense faire un spotify :
+je pense faire un spotify 
 
-## fonctionnalités
-- récupère une api et affiche  : 
+### fonctionnalités
+- récupère une api et affiche :
     -les albums
     -les titres d'un album
     -les infos d'un album
