@@ -3,7 +3,7 @@ Kyllian GROLLEMUND
 
 ## Description
 
-je pense faire un spotify 
+Spotify 
 
 ### Fonctionnalités
 
