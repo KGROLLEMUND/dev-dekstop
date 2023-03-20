@@ -17,4 +17,11 @@ contextBridge.exposeInMainWorld("path", path);
 // They'll be accessible at "window.versions".
 process.once("loaded", () => {
   contextBridge.exposeInMainWorld("versions", process.versions);
+  contextBridge.exposeInMainWorld('electron', {
+    doThing: 42,
+    alertNotification: () =>
+      new Notification('Vous écoutez une musique', {
+        body: "best musique ever"
+      }),
+  })
 });
