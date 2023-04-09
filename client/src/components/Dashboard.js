@@ -1,89 +1,98 @@
-import { useState, useEffect } from "react"
-import useAuth from "./useAuth"
-// import Player from "./Player"
-// import TrackSearchResult from "./TrackSearchResult"
-import { Container, Form } from "react-bootstrap"
-import SpotifyWebApi from "spotify-web-api-node"
-import axios from "axios"
+import { useState, useEffect } from "react";
+import useAuth from "./useAuth";
+import Player from "./Player";
+import TrackSearchResult from "./TrackSearchResult";
+import { Container, Form } from "react-bootstrap";
+import SpotifyWebApi from "spotify-web-api-node";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "f2589aed12dc496ca813d16428fbbcdc",
-})
+});
 
-export default function Dashboard({ code }) {
-  const accessToken = useAuth(code)
-//   const [search, setSearch] = useState("")
-//   const [searchResults, setSearchResults] = useState([])
-//   const [playingTrack, setPlayingTrack] = useState()
-//   const [lyrics, setLyrics] = useState("")
+export default function Dashboard() {
+  const accessToken = useAuth();
+  const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [playingTrack, setPlayingTrack] = useState(null);
+  const [lyrics, setLyrics] = useState("");
+  const location = useLocation();
+  // console.log(location);
+  // console.log("accessToken", accessToken);
 
-//   function chooseTrack(track) {
-//     setPlayingTrack(track)
-//     setSearch("")
-//     setLyrics("")
-//   }
-
-//   useEffect(() => {
-//     if (!playingTrack) return
-
-//     axios
-//       .get("http://localhost:3001/lyrics", {
-//         params: {
-//           track: playingTrack.title,
-//           artist: playingTrack.artist,
-//         },
-//       })
-//       .then(res => {
-//         setLyrics(res.data.lyrics)
-//       })
-//   }, [playingTrack])
+  function chooseTrack(track) {
+    setPlayingTrack(track);
+    setSearch('');
+    setLyrics("");
+  }
 
   useEffect(() => {
-    if (!accessToken) return
-    spotifyApi.setAccessToken(accessToken)
-  }, [accessToken])
+    if (!playingTrack) return;
 
-//   useEffect(() => {
-//     if (!search) return setSearchResults([])
-//     if (!accessToken) return
+    axios
+      .get("http://localhost:3001/lyrics", {
+        params: {
+          track: playingTrack.title,
+          artist: playingTrack.artist,
+        },
+      })
+      .then((res) => {
+        setLyrics(res.data.lyrics);
+      });
+  }, [playingTrack]);
 
-//     let cancel = false
-//     spotifyApi.searchTracks(search).then(res => {
-//       if (cancel) return
-//       setSearchResults(
-//         res.body.tracks.items.map(track => {
-//           const smallestAlbumImage = track.album.images.reduce(
-//             (smallest, image) => {
-//               if (image.height < smallest.height) return image
-//               return smallest
-//             },
-//             track.album.images[0]
-//           )
+  useEffect(() => {
+    if (!accessToken) return;
+    spotifyApi.setAccessToken(accessToken);
+  }, [accessToken]);
 
-//           return {
-//             artist: track.artists[0].name,
-//             title: track.name,
-//             uri: track.uri,
-//             albumUrl: smallestAlbumImage.url,
-//           }
-//         })
-//       )
-//     })
+  useEffect(() => {
+    if (!search) return setSearchResults([]);
+    if (!accessToken) return;
 
-//     return () => (cancel = true)
-//   }, [search, accessToken])
+    let cancel = false;
+    spotifyApi.searchTracks(search).then((res) => {
+      if (cancel) return;
+      setSearchResults(
+        res.body.tracks.items.map((track) => {
+          const smallestAlbumImage = track.album.images.reduce(
+            (smallest, image) => {
+              if (image.height < smallest.height) return image;
+              return smallest;
+            },
+            track.album.images[0]
+          );
+
+          return {
+            artist: track.artists[0].name,
+            title: track.name,
+            uri: track.uri,
+            albumUrl: smallestAlbumImage.url,
+          };
+        })
+      );
+    });
+
+    return () => (cancel = true);
+  }, [search, accessToken]);
 
   return (
-
+    // console.log("accessToken", accessToken),
+    console.log("playingTrack dashboard :", playingTrack),
     <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
-      {/* <Form.Control
+      <a className="btn btn-success btn-lg" href="/">
+        Login
+      </a>
+      <Form.Control
         type="search"
         placeholder="Search Songs/Artists"
         value={search}
-        onChange={e => setSearch(e.target.value)}
-      /> */}
-      {/* <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
-        {searchResults.map(track => (
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      
+      <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
+        {searchResults.map((track) => (
           <TrackSearchResult
             track={track}
             key={track.uri}
@@ -95,11 +104,11 @@ export default function Dashboard({ code }) {
             {lyrics}
           </div>
         )}
-      </div> */}
-      {/* <div>
+      </div>
+      
+      <div>
         <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
-      </div> */}
-      <div>{code}</div>
+      </div>
     </Container>
-  )
+  );
 }

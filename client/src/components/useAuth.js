@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
+import {useNavigate} from "react-router-dom"
 
-export default function useAuth(code) {
+export default function useAuth() {
+  const code = localStorage.getItem("code")
   const [accessToken, setAccessToken] = useState()
   const [refreshToken, setRefreshToken] = useState()
   const [expiresIn, setExpiresIn] = useState()
-
+  const navigate = useNavigate();
   useEffect(() => {
     axios
       .post("http://localhost:3001/login", {
@@ -15,10 +17,10 @@ export default function useAuth(code) {
         setAccessToken(res.data.accessToken)
         setRefreshToken(res.data.refreshToken)
         setExpiresIn(res.data.expiresIn)
-        window.history.pushState({}, null, "/")
+        navigate("/home")
       })
-      .catch(() => {
-        window.location = "/"
+      .catch((error) => {
+        console.error(error);
       })
   }, [code])
 
@@ -33,8 +35,8 @@ export default function useAuth(code) {
           setAccessToken(res.data.accessToken)
           setExpiresIn(res.data.expiresIn)
         })
-        .catch(() => {
-          window.location = "/"
+        .catch((error) => {
+        console.error(error);
         })
     }, (expiresIn - 60) * 1000)
 

@@ -1,21 +1,28 @@
-import { useState, useEffect } from "react"
+// import { useState, useEffect } from "react"
+import React from "react"
 import SpotifyPlayer from "react-spotify-web-playback"
 
-export default function Player({ accessToken, trackUri }) {
-  const [play, setPlay] = useState(false)
+function Player({ accessToken, trackUri}) {
+  // const [play, setPlay] = useState(false);
 
-  useEffect(() => setPlay(true), [trackUri])
+  // useEffect(() => setPlay(true), [trackUri]);
 
-  if (!accessToken) return null
+  if (!accessToken || !trackUri) return null;
+
   return (
+    // console.log("uri :", trackUri),
+    console.log("token :", accessToken),
     <SpotifyPlayer
       token={accessToken}
       showSaveIcon
-      callback={state => {
-        if (!state.isPlaying) setPlay(false)
-      }}
-      play={play}
+      // callback={(state) => {
+      //   if (!state.isPlaying) setPlay(false);
+      // }}
+      // play={play}
       uris={trackUri ? [trackUri] : []}
     />
-  )
+  );
 }
+
+export default Player
+
