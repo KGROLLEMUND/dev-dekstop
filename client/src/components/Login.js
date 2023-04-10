@@ -56,16 +56,32 @@ const LoginButton = styled(Button)`
   }
 `;
 
+// const scopes = [
+//   'streaming',
+//   'user-read-recently-played',
+//   'user-read-playback-state',
+//   'user-top-read',
+//   'user-modify-playback-state',
+//   'user-follow-read',
+//   'user-library-read',
+//   'user-library-modify',
+//   'user-read-email',
+//   'user-read-private'
+// ];
+
+// const AUTH_URL =
+// `https://accounts.spotify.com/authorize?client_id=${process.env.CLIENT_ID}&response_type=code&redirect_uri=http://localhost:3000&scope=${scopes.join('%20')}`
+
 const AUTH_URL =
   "https://accounts.spotify.com/authorize?client_id=f2589aed12dc496ca813d16428fbbcdc&response_type=code&redirect_uri=http://localhost:3000&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state";
 
-export default function Login() {
+export default function Login(code) {
   const location = useLocation();
   const navigate = useNavigate();
-  // console.log(location.search.split("=")[1])
+  // // console.log(location.search.split("=")[1])
   useEffect(() => {
-    const code = location.search.split("=")[1];
-    localStorage.setItem("code", code);
+  // const code = location.search.split("=")[1];
+  // localStorage.setItem("code", code);
     if (typeof code === "undefined") {
       navigate("/");
     } else {

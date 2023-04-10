@@ -23,3 +23,4 @@ Partie 2
 - catégorie favori
 - Notif musique en cours
 
+vidéo youtube : https://www.youtube.com/watch?v=VYxkQBxW1Ts

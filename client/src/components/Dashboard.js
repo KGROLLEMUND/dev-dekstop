@@ -1,29 +1,54 @@
 import { useState, useEffect } from "react";
 import useAuth from "./useAuth";
 import Player from "./Player";
+// import MusicPlayer from "./MusicPlayer";
 import TrackSearchResult from "./TrackSearchResult";
-import { Container, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import SpotifyWebApi from "spotify-web-api-node";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+// import Playlist from "./Playlist";
+// import { useLocation } from "react-router-dom";
+import styled from "styled-components";
+
+const MainContentContainer = styled.div`
+  width: 83%;
+  // grid-area: main;
+`;
+
+const SearchInput = styled(Form.Control)`
+  type: search;
+`;
+
+const ScrollableContainer = styled.div`
+  flex-grow: 1;
+  margin-top: 2rem;
+  overflow-y: auto;
+`;
+
+const NoResultsContainer = styled.div`
+  text-align: center;
+  white-space: pre;
+`;
 
 const spotifyApi = new SpotifyWebApi({
   clientId: "f2589aed12dc496ca813d16428fbbcdc",
 });
 
-export default function Dashboard() {
-  const accessToken = useAuth();
+export default function Dashboard({ code }) {
+  const accessToken = useAuth(code);
   const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
   const [playingTrack, setPlayingTrack] = useState(null);
+  // const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const [lyrics, setLyrics] = useState("");
-  const location = useLocation();
-  // console.log(location);
-  // console.log("accessToken", accessToken);
+  const [playlistId, setPlaylistId] = useState("");
+  const [playlistName, setPlaylistName] = useState("");
+
+  // const location = useLocation();
 
   function chooseTrack(track) {
     setPlayingTrack(track);
-    setSearch('');
+    setSearch("");
     setLyrics("");
   }
 
@@ -73,42 +98,40 @@ export default function Dashboard() {
         })
       );
     });
-
     return () => (cancel = true);
   }, [search, accessToken]);
 
   return (
     // console.log("accessToken", accessToken),
+    console.log("useAuth(code)", useAuth(code)),
+    console.log("code", code),
+    console.log("token", accessToken),
     console.log("playingTrack dashboard :", playingTrack),
-    <Container className="d-flex flex-column py-2" style={{ height: "100vh" }}>
-      <a className="btn btn-success btn-lg" href="/">
-        Login
-      </a>
-      <Form.Control
-        type="search"
-        placeholder="Search Songs/Artists"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      
-      <div className="flex-grow-1 my-2" style={{ overflowY: "auto" }}>
-        {searchResults.map((track) => (
-          <TrackSearchResult
-            track={track}
-            key={track.uri}
-            chooseTrack={chooseTrack}
-          />
-        ))}
-        {searchResults.length === 0 && (
-          <div className="text-center" style={{ whiteSpace: "pre" }}>
-            {lyrics}
-          </div>
-        )}
-      </div>
-      
-      <div>
+    (
+      <MainContentContainer>
+        <a className="btn btn-success btn-lg" href="/">
+          Login
+        </a>
+        <SearchInput
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search Songs/Artists"
+        />
+
+        <ScrollableContainer>
+          {searchResults.map((track) => (
+            <TrackSearchResult
+              track={track}
+              key={track.uri}
+              chooseTrack={chooseTrack}
+            />
+          ))}
+          {searchResults.length === 0 && (
+            <NoResultsContainer>{lyrics}</NoResultsContainer>
+          )}
+        </ScrollableContainer>
         <Player accessToken={accessToken} trackUri={playingTrack?.uri} />
-      </div>
-    </Container>
+      </MainContentContainer>
+    )
   );
 }
