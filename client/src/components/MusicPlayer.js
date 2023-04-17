@@ -14,7 +14,7 @@ const MusicPlayer= ({token, songUri}) => {
   const [play, setPlay] = useState(false);
 
   useEffect(() => {
-    setPlay(true);
+    setPlay(true)
   },[songUri])
 
   return(

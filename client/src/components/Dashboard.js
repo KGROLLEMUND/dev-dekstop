@@ -41,8 +41,8 @@ export default function Dashboard({ code }) {
   // const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [lyrics, setLyrics] = useState("");
-  const [playlistId, setPlaylistId] = useState("");
-  const [playlistName, setPlaylistName] = useState("");
+  // const [playlistId, setPlaylistId] = useState("");
+  // const [playlistName, setPlaylistName] = useState("");
 
   // const location = useLocation();
 
@@ -69,7 +69,9 @@ export default function Dashboard({ code }) {
 
   useEffect(() => {
     if (!accessToken) return;
+    // console.log("tokenInspotify", accessToken);
     spotifyApi.setAccessToken(accessToken);
+    // console.log("pushtoken", spotifyApi.getAccessToken());
   }, [accessToken]);
 
   useEffect(() => {
@@ -102,11 +104,11 @@ export default function Dashboard({ code }) {
   }, [search, accessToken]);
 
   return (
+    // console.log("parti dashboard"),
     // console.log("accessToken", accessToken),
-    console.log("useAuth(code)", useAuth(code)),
-    console.log("code", code),
-    console.log("token", accessToken),
-    console.log("playingTrack dashboard :", playingTrack),
+    // console.log("useAuth(code)", useAuth(code)),
+    // console.log("code", code),
+    // console.log("playingTrack dashboard :", playingTrack),
     (
       <MainContentContainer>
         <a className="btn btn-success btn-lg" href="/">

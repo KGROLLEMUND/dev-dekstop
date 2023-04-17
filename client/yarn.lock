@@ -9069,7 +9069,7 @@
   optionalDependencies:
     "fsevents" "^2.3.2"
 
-"react-spotify-web-playback@^0.8.2":
+"react-spotify-web-playback@^0.8.1":
   "integrity" "sha512-Ae4pCP7DYs15IZIL5JX3+QaKY7yTE+1ojNdG1TGtAebqr+wuaEo3ubT2WNzj9nbykfwSbrTXVfNd8TCqhOgrnw=="
   "resolved" "https://registry.npmjs.org/react-spotify-web-playback/-/react-spotify-web-playback-0.8.2.tgz"
   "version" "0.8.2"
@@ -9791,6 +9791,11 @@
     "http-deceiver" "^1.2.7"
     "select-hose" "^2.0.0"
     "spdy-transport" "^3.0.0"
+
+"spotify-web-api-js@^1.5.2":
+  "integrity" "sha512-ie1gbg1wCabfobIkXTIBLUMyULS/hMCpF44Cdx2pAO0/+FrjhNSDjlDzcwCEDy+ZIo3Fscs+Gkg/GTeQ/ijo+Q=="
+  "resolved" "https://registry.npmjs.org/spotify-web-api-js/-/spotify-web-api-js-1.5.2.tgz"
+  "version" "1.5.2"
 
 "spotify-web-api-node@^5.0.2":
   "integrity" "sha512-r82dRWU9PMimHvHEzL0DwEJrzFk+SMCVfq249SLt3I7EFez7R+jeoKQd+M1//QcnjqlXPs2am4DFsGk8/GCsrA=="
